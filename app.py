@@ -4,11 +4,11 @@ import os
 from io import BytesIO
 import json
 import base64
-from tensorflow.keras.models import load_model
+""" from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input, decode_predictions
 from tensorflow.keras.preprocessing.image import img_to_array
-import numpy as np
+import numpy as np """
 
 
 app = Flask(__name__)
@@ -22,8 +22,7 @@ def home():
 
 @app.route('/test', methods=['GET'])
 def test():
-    
-    return render_template('testimg.html')
+    return render_template('uploader/index.html')
 
 @app.route('/upload', methods=['GET'])
 def upload():
@@ -36,11 +35,12 @@ def uploadfile():
         file = request.files['file']
         file.save(os.path.join(app.root_path, f"uploads/{file.filename}"))
         img_path=os.path.join(app.root_path, f"uploads/{file.filename}")
-        
+        print(img_path)
+        """
         model = load_model('model2_resnet.h5')
         
-        print(img_path)
-        img = image.load_img(img_path, target_size=(224, 224))
+        
+         img = image.load_img(img_path, target_size=(224, 224))
 
         imgResult = img_to_array(img)
         imgResult = np.expand_dims(imgResult, axis=0)
@@ -56,7 +56,8 @@ def uploadfile():
         # print the label of the class with maximum score
         print(class_labels[pred[0]])
 
-        return class_labels[pred[0]]
+        return class_labels[pred[0]] """
+        return ""
     
 
 
