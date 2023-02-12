@@ -36,6 +36,8 @@ def uploadfile():
         file.save(os.path.join(app.root_path, f"uploads/{file.filename}"))
         img_path=os.path.join(app.root_path, f"uploads/{file.filename}")
         print(img_path)
+        result="Good"
+        return render_template('cards/index.html',result = result,img_path=img_path)
         """
         model = load_model('model2_resnet.h5')
         
@@ -56,8 +58,8 @@ def uploadfile():
         # print the label of the class with maximum score
         print(class_labels[pred[0]])
 
-        return class_labels[pred[0]] """
-        return ""
+        return class_labels[pred[0]] 
+        return """
     
 
 
@@ -66,6 +68,9 @@ def receive():
     print(request.form['myData'])
     return ''
 
+@app.route('/cards', methods=['GET'])
+def cards():
+    return render_template('cards/index.html',result = "Hello",img_path="/Users/droom/Documents/newunscript/uploads/Very Bad Images[Accuracy_75]260.png")
 
 @app.route("/example", methods=["POST"])
 def example():
