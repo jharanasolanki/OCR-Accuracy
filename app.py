@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify ,redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 from io import BytesIO
@@ -29,6 +29,7 @@ def upload():
     return render_template('upload.html')
 
 
+
 @app.route('/uploadfile', methods=['POST'])
 def uploadfile():
     if request.method == 'POST':
@@ -37,7 +38,10 @@ def uploadfile():
         img_path=os.path.join(app.root_path, f"uploads/{file.filename}")
         print(img_path)
         result="Good"
-        return render_template('cards/index.html',result = result,img_path=img_path)
+        
+        return ""
+        #return redirect(url_for('esha_card/pg2.htmldex'))
+        #render_template('esha_card/pg2.html',result = result,img_path=img_path)
         """
         model = load_model('model2_resnet.h5')
         
@@ -70,7 +74,7 @@ def receive():
 
 @app.route('/cards', methods=['GET'])
 def cards():
-    return render_template('cards/index.html',result = "Hello",img_path="/Users/droom/Documents/newunscript/uploads/Very Bad Images[Accuracy_75]260.png")
+    return render_template('esha_card/pg2.html',result = "Hello",img_path="/Users/droom/Documents/newunscript/uploads/Very Bad Images[Accuracy_75]260.png")
 
 @app.route("/example", methods=["POST"])
 def example():
