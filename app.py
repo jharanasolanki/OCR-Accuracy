@@ -31,6 +31,21 @@ def upload():
     return render_template('upload.html')
 
 
+@app.route("/data", methods=["POST"])
+def get_data():
+    # receive the JSON data from the request
+    data = request.get_json()
+    print("hi:", data['result'])
+    ans = data['result']
+    accuracy = {"very good": ">95", "good": "85-95",
+                "bad": "85-75", "very bad": "<75"}
+    print(accuracy[ans])
+    # do some processing with the data
+
+    # render the template and pass the processed data as a parameter
+    return render_template('esha_card/pg2.html', result=ans, accuracy=accuracy[ans])
+
+
 @app.route('/uploadfile', methods=['POST'])
 def uploadfile():
     if request.method == 'POST':
@@ -60,8 +75,17 @@ def uploadfile():
         pred = np.argmax(preds, axis=-1)
         # print the label of the class with maximum score
         print(class_labels[pred[0]])
+        # return class_labels[pred[0]]
+        data = {"result": class_labels[pred[0]]}
 
-        return class_labels[pred[0]]
+        response = app.test_client().post(
+            "/data", json=data)
+
+        # check the response status code
+        assert response.status_code == 200
+
+        # return the response data
+        return response.data
 
 
 @app.route('/receivedata', methods=['POST'])
